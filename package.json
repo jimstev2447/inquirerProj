@@ -1,0 +1,16 @@
+{
+  "name": "inquirerproj",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "clear": "^0.1.0",
+    "inquirer": "^7.0.3",
+    "jest": "^24.9.0"
+  }
+}

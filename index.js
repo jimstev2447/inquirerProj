@@ -8,15 +8,49 @@ const menu = {
   choices: ["play a game", "options", "exit"]
 };
 const grid = [
-  [[], [], []],
-  [[], [], []],
-  [[], [], []]
+  [[], [], [], [], [], [], [], [], []],
+  [[], [], [], [], [], [], [], [], []],
+  [[], [], [], [], [], [], [], [], []],
+  [[], [], [], [], [], [], [], [], []],
+  [[], [], [], [], [], [], [], [], []],
+  [[], [], [], [], [], [], [], [], []],
+  [[], [], [], [], [], [], [], [], []],
+  [[], [], [], [], [], [], [], [], []],
+  [[], [], [], [], [], [], [], [], []]
 ];
 
-const showGrid = () => {
+const makeGrid = size => {
+  const grid = [];
+  for (let i = 0; i < size; i++) {
+    grid.push([]);
+    for (let j = 0; j < size; j++) {
+      grid[i].push(0);
+    }
+  }
+  return grid;
+};
+
+const makeMonsters = gridSize => {
+  let monsters = [];
+  monsters.push([
+    Math.floor(Math.random() * Math.floor(gridSize)),
+    Math.floor(Math.random() * Math.floor(gridSize))
+  ]);
+  return monsters;
+};
+
+const showGrid = grid => {
+  let count = grid.length;
   grid.forEach(line => {
-    console.log("# # #");
+    console.log(
+      line.reduce((acc, cur) => {
+        const tolog = cur || " ";
+        return `${acc} ${tolog}`;
+      }, `${count}`)
+    );
+    count--;
   });
+  console.log("  a b c d e f g h j");
 };
 
 const welcome = () => {
@@ -25,7 +59,25 @@ const welcome = () => {
     switch (answer.main) {
       case "play a game":
         console.log("gamer are we???");
-        showGrid();
+        let newGrid = makeGrid(9);
+        const Monster = makeMonsters(9);
+        Monster.forEach(([monsterX, monsterY]) => {
+          newGrid[monsterY][monsterX] = "M";
+          if (monsterY > 0) {
+            newGrid[monsterY - 1][monsterX]++;
+          }
+          if (monsterY < 8) {
+            newGrid[monsterY + 1][monsterX]++;
+          }
+          if (monsterX > 0) {
+            newGrid[monsterY][monsterX - 1]++;
+          }
+          if (monsterX < 8) {
+            newGrid[monsterY][monsterX + 1]++;
+          }
+        });
+        showGrid(newGrid);
+
         welcome();
         break;
       case "options":
